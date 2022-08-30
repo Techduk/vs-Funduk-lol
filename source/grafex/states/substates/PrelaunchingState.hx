@@ -109,7 +109,7 @@ class PrelaunchingState extends MusicBeatState
         txt.borderColor = FlxColor.BLACK;
         txt.borderSize = 3;
         txt.borderStyle = FlxTextBorderStyle.OUTLINE;
-        txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+        txt.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, CENTER);
         txt.screenCenter(X);
         add(txt);
 
@@ -117,7 +117,7 @@ class PrelaunchingState extends MusicBeatState
         arrowTxt.borderColor = FlxColor.BLACK;
         arrowTxt.borderSize = 3;
         arrowTxt.borderStyle = FlxTextBorderStyle.OUTLINE;
-        arrowTxt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+        arrowTxt.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, CENTER);
         add(arrowTxt);       
         
         changeSelection();
@@ -254,7 +254,7 @@ class PrelaunchingState extends MusicBeatState
             FlxTransitionableState.skipNextTransIn = false;
             FlxTransitionableState.skipNextTransOut = false;
 
-            MusicBeatState.switchState(new TitleState());
+            MusicBeatState.switchState(new MainMenuState());
         });
     }
 }
