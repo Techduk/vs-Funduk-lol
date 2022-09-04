@@ -254,7 +254,7 @@ class PrelaunchingState extends MusicBeatState
             FlxTransitionableState.skipNextTransIn = false;
             FlxTransitionableState.skipNextTransOut = false;
 
-            MusicBeatState.switchState(new MainMenuState());
+            MusicBeatState.switchState(new TitleState());
         });
     }
 }
