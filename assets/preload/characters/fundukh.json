@@ -1,0 +1,83 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-60,
+				-80
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "IdleAnimation"
+		},
+		{
+			"offsets": [
+				-68,
+				-74
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "LeftAnim"
+		},
+		{
+			"offsets": [
+				-111,
+				-70
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "RightAnim"
+		},
+		{
+			"offsets": [
+				-115,
+				-71
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "DownAnim"
+		},
+		{
+			"offsets": [
+				-104,
+				-70
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "UpAnim"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/FundukH",
+	"position": [
+		0,
+		0
+	],
+	"healthbar_colors2": [
+		216,
+		85,
+		142
+	],
+	"healthicon": "fk",
+	"flip_x": false,
+	"healthbar_colors": [
+		216,
+		85,
+		142
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
