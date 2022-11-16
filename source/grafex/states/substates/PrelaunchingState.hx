@@ -30,6 +30,7 @@ class PrelaunchingState extends MusicBeatState
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
     public static var leftState:Bool = false;
+    private static var alreadySeen:Bool = false;
 
     public static var link:String = 'https://raw.githubusercontent.com/JustXale/fnf-grafex/raw/versionCheck.txt'; // i hate github now
 
@@ -53,7 +54,7 @@ class PrelaunchingState extends MusicBeatState
 
         Application.current.window.title = Main.appTitle;
         
-        FlxG.mouse.visible = false;
+		FlxG.mouse.visible = false;
         FlxG.game.focusLostFramerate = 60;
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
@@ -101,7 +102,14 @@ class PrelaunchingState extends MusicBeatState
         {
             txts.push(["Couldn't connect to the server", '']);
         }
-        #end //MusicBeatState.switchState(new TitleState());
+        #end
+
+
+        if(FlxG.save.data.noLaunchScreen == null)
+            FlxG.save.data.noLaunchScreen = false;
+
+        if(FlxG.save.data.noLaunchScreen == true)
+            MusicBeatState.switchState(new TitleState());
 
         txts.push(["Thanks for using our engine! <3\n- with love\n    Grafex Team", '']);
 
@@ -109,7 +117,7 @@ class PrelaunchingState extends MusicBeatState
         txt.borderColor = FlxColor.BLACK;
         txt.borderSize = 3;
         txt.borderStyle = FlxTextBorderStyle.OUTLINE;
-        txt.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, CENTER);
+        txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
         txt.screenCenter(X);
         add(txt);
 
@@ -117,7 +125,7 @@ class PrelaunchingState extends MusicBeatState
         arrowTxt.borderColor = FlxColor.BLACK;
         arrowTxt.borderSize = 3;
         arrowTxt.borderStyle = FlxTextBorderStyle.OUTLINE;
-        arrowTxt.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, CENTER);
+        arrowTxt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
         add(arrowTxt);       
         
         changeSelection();
@@ -143,7 +151,7 @@ class PrelaunchingState extends MusicBeatState
             makeCoolTransition();
 
         if(controls.ACCEPT)
-            if(txts[curSelected][1] != null && txts[curSelected][1] != '') Utils.browserLoad(txts[curSelected][1]);
+            if(!leftState && txts[curSelected][1] != null && txts[curSelected][1] != '') Utils.browserLoad(txts[curSelected][1]);
     }
 
 	function changeSelection(?pos:Int)
@@ -189,7 +197,6 @@ class PrelaunchingState extends MusicBeatState
 
                 for(i in 0...Http.requestUrl(link).trim().split('\n')[0].split('.').length)
                 {
-                    trace(Std.parseInt(Http.requestUrl(link).trim().split('\n')[0].split('.')[i]));
                     returnArray.push(Std.parseInt(Http.requestUrl(link).trim().split('\n')[0].split('.')[i]));
                 }
 
@@ -210,7 +217,6 @@ class PrelaunchingState extends MusicBeatState
 
                     for(i in 0...File.getContent('localVersion.txt').trim().split('\n')[0].split('.').length)
                     {
-                        trace(Std.parseInt(File.getContent('localVersion.txt').trim().split('\n')[0].split('.')[i]));
                         returnArray.push(Std.parseInt(File.getContent('localVersion.txt').trim().split('\n')[0].split('.')[i]));
                     }
                     return returnArray;
@@ -229,11 +235,6 @@ class PrelaunchingState extends MusicBeatState
 
     function checkVersion(version:Array<Int>):Bool
     {
-        for(i in 0...version.length)
-        {
-            trace(version[i] <= EngineData.notParsedVersion[i]);
-        }
-
 		if(version[0] <= EngineData.notParsedVersion[0] && version[1] < EngineData.notParsedVersion[1])
             return true;
         else if(version[2] <= EngineData.notParsedVersion[2])
@@ -246,14 +247,16 @@ class PrelaunchingState extends MusicBeatState
     {
         arrowTxt.alpha = 1;
         leftState = true;
+        alreadySeen = true;
         //FlxG.camera.fade(FlxColor.BLACK, 3, true);
         FlxTween.tween(txt, {alpha: 0}, 3);
         FlxTween.tween(arrowTxt, {alpha: 0}, 3);
-        FlxG.sound.play(Paths.sound('titleShoot')).fadeOut(4, 0);
+        FlxG.sound.play(Paths.sound('titleShoot'), 0.8).fadeOut(4, 0);
         FlxG.camera.flash(FlxColor.WHITE, 3, function() {
             FlxTransitionableState.skipNextTransIn = false;
             FlxTransitionableState.skipNextTransOut = false;
-
+            FlxG.save.data.noLaunchScreen = true;
+            FlxG.save.flush();
             MusicBeatState.switchState(new TitleState());
         });
     }
